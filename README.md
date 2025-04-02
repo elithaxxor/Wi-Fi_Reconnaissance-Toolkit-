@@ -1,9 +1,5 @@
 This is an old random script i found probably wrote it when i was a kid 
 
-```markdwon 
-
-Here's an engaging README.md with visual storytelling elements:
-
 ```markdown
 # 📡 Wi-Fi Reconnaissance Toolkit 
 _Advanced Network Analysis Techniques_
