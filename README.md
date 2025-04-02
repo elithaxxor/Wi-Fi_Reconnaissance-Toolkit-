@@ -1,8 +1,15 @@
 This is an old random script i found probably wrote it when i was a kid 
 
 ```markdwon 
-The script indeed blends passive and active scanning methods, each serving distinct purposes. The passive scans—like the initial wifite -all and airodump-ng wlan0 runs—quietly listen for Wi-Fi signals without transmitting anything, making them stealthy and low-risk. Similarly, the wider and AP-specific captures (airodump-ng -w wider_scan_capture and -w ap_scan_capture) stick to this passive approach, collecting ambient packets without interference.
-On the flip side, the active components—namely the deauthentication attack via aireplay-ng -0 0 -a {AP MAC ADDRESS} and the subsequent handshake capture with airodump-ng -w deauth_capture—shift gears. These steps involve sending packets to provoke a response, specifically to snag the WPA/WPA2 handshake. The deauth attack forces clients to reconnect, triggering the handshake exchange that’s critical for password cracking.
+
+The script blends passive and active scanning methods, each serving distinct purposes.The passive scans—like the initial wifite -all and airodump-ng wlan0 runs—quietly listen for Wi-Fi signals without transmitting anything, making them stealthy and low-risk.
+
+Similarly, the wider and AP-specific captures (airodump-ng -w wider_scan_capture and -w ap_scan_capture) stick to this passive approach, collecting ambient packets without interference.
+
+On the flip side, the active components—namely the deauthentication attack via aireplay-ng -0 0 -a {AP MAC ADDRESS} and the subsequent handshake capture with airodump-ng -w deauth_capture—shift gears.
+
+These steps involve sending packets to provoke a response, specifically to snag the WPA/WPA2 handshake. The deauth attack forces clients to reconnect, triggering the handshake exchange that’s critical for password cracking.
+
 Active scanning’s purpose here is straightforward: handshakes don’t just float around waiting to be grabbed passively—you need to nudge the network to cough them up...
 ```
 
