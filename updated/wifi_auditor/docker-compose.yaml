@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./app:/app
+      - /dev:/dev
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    devices:
+      - "/dev/bus/usb:/dev/bus/usb"
+    depends_on:
+      - redis
+  redis:
+    image: redis:alpine
+  worker:
+    build: .
+    command: celery -A app.tasks.celery worker --loglevel=info
+    depends_on:
+      - redis
+    volumes:
+      - ./app:/app
