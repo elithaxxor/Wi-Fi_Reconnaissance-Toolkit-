@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WiFi Audit Console</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Wireless Security Dashboard</h1>
+        <div id="scan-controls">
+            <form onsubmit="startScan(event)">
+                <input type="text" name="mac" placeholder="Target MAC" required>
+                <input type="number" name="channel" placeholder="Channel" required>
+                <button type="submit">Start Security Scan</button>
+            </form>
+            <div id="scan-status"></div>
+        </div>
+        <div id="report-section">
+            <h2>Generated Reports</h2>
+            <div id="report-list"></div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
