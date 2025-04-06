@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Scan Console</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="scan-container">
+        <header class="scan-header">
+            <h1>Live Wireless Assessment</h1>
+            <div class="scan-controls">
+                <button id="stop-scan" class="btn-danger">Emergency Stop</button>
+                <span class="scan-status" id="scan-status">Initializing...</span>
+            </div>
+        </header>
+
+        <div class="scan-grid">
+            <!-- Network Visualization -->
+            <div class="card network-visualization">
+                <h2>Network Topology</h2>
+                <div id="network-graph"></div>
+                <div class="legend">
+                    <span class="ap">● Access Point</span>
+                    <span class="client">○ Client</span>
+                </div>
+            </div>
+
+            <!-- Capture Statistics -->
+            <div class="card capture-stats">
+                <h2>Capture Metrics</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-label">Packets Captured</span>
+                        <span id="packet-count" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Handshakes</span>
+                        <span id="handshake-count" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Data Rate</span>
+                        <span id="data-rate" class="stat-value">0 pkts/s</span>
+                    </div>
+                </div>
+                <div class="signal-meter">
+                    <label>Signal Strength</label>
+                    <meter id="signal-strength" min="-90" max="-30" value="-70"></meter>
+                    <span id="dbm-value">-70 dBm</span>
+                </div>
+            </div>
+
+            <!-- Target Information -->
+            <div class="card target-info">
+                <h2>Target Details</h2>
+                <table>
+                    <tr>
+                        <th>BSSID</th>
+                        <td id="target-bssid">00:11:22:33:44:55</td>
+                    </tr>
+                    <tr>
+                        <th>Channel</th>
+                        <td id="target-channel">6</td>
+                    </tr>
+                    <tr>
+                        <th>Encryption</th>
+                        <td id="target-encryption">WPA2-PSK</td>
+                    </tr>
+                    <tr>
+                        <th>Clients</th>
+                        <td id="client-count">3</td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- Packet Log -->
+            <div class="card packet-log">
+                <h2>Packet Stream</h2>
+                <div class="log-controls">
+                    <button id="filter-eapol">Show EAPOL Only</button>
+                    <button id="clear-log">Clear Log</button>
+                </div>
+                <div id="packet-stream" class="log-content">
+                    <!-- Packets will appear here via WebSocket -->
+                </div>
+            </div>
+        </div>
+
+        <div class="action-bar">
+            <button id="capture-handshake" class="btn-primary">Capture Handshake</button>
+            <button id="analyze-traffic" class="btn-secondary">Run Traffic Analysis</button>
+            <button id="generate-report" class="btn-success">Generate Report</button>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='scan.js') }}"></script>
+</body>
+</html>
