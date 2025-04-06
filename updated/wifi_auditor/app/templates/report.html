@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Assessment Report</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="report-container">
+        <header class="report-header">
+            <h1>Wireless Security Assessment Report</h1>
+            <div class="report-meta">
+                <span>Generated: <span id="report-date">{{ report.timestamp }}</span></span>
+                <span>Scan ID: <span id="scan-id">{{ report.scan_id }}</span></span>
+            </div>
+        </header>
+
+        <div class="report-actions">
+            <button id="download-pdf" class="btn-primary">Download PDF</button>
+            <button id="export-json" class="btn-secondary">Export JSON</button>
+            <button id="send-email" class="btn-secondary">Email Report</button>
+        </div>
+
+        <div class="report-content">
+            <!-- Executive Summary -->
+            <section class="report-section">
+                <h2>Executive Summary</h2>
+                <div class="severity-indicator">
+                    <span class="severity-label">Overall Risk:</span>
+                    <span class="severity-level {{ report.risk_level|lower }}">{{ report.risk_level }}</span>
+                </div>
+                <div class="summary-grid">
+                    <div class="summary-item critical">
+                        <span class="count">{{ report.findings.critical|default(0) }}</span>
+                        <span>Critical</span>
+                    </div>
+                    <div class="summary-item high">
+                        <span class="count">{{ report.findings.high|default(0) }}</span>
+                        <span>High</span>
+                    </div>
+                    <div class="summary-item medium">
+                        <span class="count">{{ report.findings.medium|default(0) }}</span>
+                        <span>Medium</span>
+                    </div>
+                    <div class="summary-item low">
+                        <span class="count">{{ report.findings.low|default(0) }}</span>
+                        <span>Low</span>
+                    </div>
+                </div>
+                <div class="summary-text">
+                    {{ report.executive_summary|safe }}
+                </div>
+            </section>
+
+            <!-- Vulnerability Details -->
+            <section class="report-section">
+                <h2>Detailed Findings</h2>
+                <div class="findings-container">
+                    {% for finding in report.findings.details %}
+                    <div class="finding-card {{ finding.severity|lower }}">
+                        <div class="finding-header">
+                            <span class="finding-severity">{{ finding.severity }}</span>
+                            <span class="finding-title">{{ finding.title }}</span>
+                        </div>
+                        <div class="finding-content">
+                            <div class="finding-description">
+                                <h4>Description</h4>
+                                <p>{{ finding.description }}</p>
+                            </div>
+                            <div class="finding-details">
+                                <div>
+                                    <h4>Impact</h4>
+                                    <p>{{ finding.impact }}</p>
+                                </div>
+                                <div>
+                                    <h4>Recommendation</h4>
+                                    <p>{{ finding.recommendation }}</p>
+                                </div>
+                            </div>
+                            {% if finding.evidence %}
+                            <div class="finding-evidence">
+                                <h4>Evidence</h4>
+                                <pre><code>{{ finding.evidence }}</code></pre>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <!-- Network Topology -->
+            <section class="report-section">
+                <h2>Network Topology</h2>
+                <div class="topology-diagram">
+                    <img src="data:image/svg+xml;base64,{{ report.topology_image }}" alt="Network Topology">
+                </div>
+                <div class="device-list">
+                    <h3>Discovered Devices</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>MAC Address</th>
+                                <th>Manufacturer</th>
+                                <th>Signal Strength</th>
+                                <th>First Seen</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for device in report.devices %}
+                            <tr>
+                                <td>{{ device.mac }}</td>
+                                <td>{{ device.manufacturer }}</td>
+                                <td>{{ device.signal }} dBm</td>
+                                <td>{{ device.first_seen }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Security Recommendations -->
+            <section class="report-section">
+                <h2>Remediation Plan</h2>
+                <div class="recommendations">
+                    {% for rec in report.recommendations %}
+                    <div class="recommendation">
+                        <input type="checkbox" id="rec-{{ loop.index }}">
+                        <label for="rec-{{ loop.index }}">{{ rec.action }}</label>
+                        <div class="rec-details">
+                            <p><strong>Priority:</strong> {{ rec.priority }}</p>
+                            <p><strong>Implementation:</strong> {{ rec.implementation }}</p>
+                            {% if rec.references %}
+                            <div class="rec-references">
+                                <strong>References:</strong>
+                                <ul>
+                                    {% for ref in rec.references %}
+                                    <li><a href="{{ ref.url }}" target="_blank">{{ ref.title }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+        </div>
+
+        <footer class="report-footer">
+            <p>This report was generated by WiFi Security Assessment Toolkit v1.0</p>
+            <p>Confidential - For authorized personnel only</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='report.js') }}"></script>
+</body>
+</html>
