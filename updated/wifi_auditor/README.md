@@ -1,4 +1,3 @@
-```markdown
 # 🛡️ Enterprise Wireless Security Assessment Platform
 
 <div align="center">
@@ -12,6 +11,7 @@
 [![License](https://img.shields.io/badge/License-AGPL%203.0-green?style=for-the-badge&logo=gnu&logoColor=white)](LICENSE)
 
 </div>
+```markdown
 
 > 🔐 **Enterprise-Grade Wireless Security Analysis** | 📊 **Comprehensive Reporting** | 🔄 **Automated Workflows**
 
