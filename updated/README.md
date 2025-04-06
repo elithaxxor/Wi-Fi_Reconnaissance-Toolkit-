@@ -9,7 +9,7 @@ _Modern Network Analysis Suite_
 
 ```diff
 + Ethical Hacking Framework | 🔐 Security Research Tool | 🛠️ Network Diagnostic Suite
-```
+
 
 ## 🌐 Table of Contents
 - [✨ Core Features](#-core-features)
